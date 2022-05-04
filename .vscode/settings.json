@@ -1,0 +1,8 @@
+{
+    "C_Cpp.errorSquiggles": "Disabled",
+    "files.associations": {
+        "types.h": "c",
+        "mmu.h": "c",
+        "pmap.h": "c"
+    }
+}

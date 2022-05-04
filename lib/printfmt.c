@@ -82,6 +82,12 @@ void printfmt(void (*putch)(int, void*), void *putdat, const char *fmt, ...);
 void
 vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)
 {
+	// register int ch;
+	// while ((ch = *(unsigned char *) fmt++) != '\0') {
+	// 		putch(ch, putdat);
+	// 	}
+	// return; 
+#if 1
 	register const char *p;
 	register int ch, err;
 	unsigned long long num;
@@ -241,6 +247,7 @@ vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)
 			break;
 		}
 	}
+	#endif
 }
 
 void
