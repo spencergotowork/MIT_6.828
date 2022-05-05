@@ -149,6 +149,7 @@ mem_init(void)
 
 	// Permissions: kernel R, user R
 	kern_pgdir[PDX(UVPT)] = PADDR(kern_pgdir) | PTE_U | PTE_P;
+	// cprintf("\n\nthe PDX(UVPT) is %u \n\n", PDX(UVPT));
 	// cprintf("\n++++++++ PDX(UVPT) ++++++++++\n");
 	// cprintf("%u \n", PDX(UVPT));
 	// cprintf("%d", PDX(UVPT));
