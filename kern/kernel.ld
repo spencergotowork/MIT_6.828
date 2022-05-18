@@ -48,10 +48,10 @@ SECTIONS
 	}
 
 	.bss : {
-		PROVIDE(edata = .);
+		PROVIDE(edata = .); 
 		*(.bss)
 		PROVIDE(end = .);
-		BYTE(0)
+		BYTE(0)   
 	}
 
 
