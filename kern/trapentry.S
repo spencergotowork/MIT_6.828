@@ -21,6 +21,10 @@
  *   void NAME();
  * where NAME is the argument passed to TRAPHANDLER.
  */
+
+ #define NOTHINGBUTUGLY()         \
+	
+
 #define TRAPHANDLER(name, num)						\
 	.globl name;		/* define global symbol for 'name' */	\
 	.type name, @function;	/* symbol type is function */		\
@@ -48,9 +52,62 @@
  * Lab 3: Your code here for generating entry points for the different traps.
  */
 
+TRAPHANDLER_NOEC(divide_handler, T_DIVIDE)
+TRAPHANDLER_NOEC(debug_handler, T_DEBUG)
+TRAPHANDLER_NOEC(nmi_handler, T_NMI)
+TRAPHANDLER_NOEC(brkpt_handler, T_BRKPT)
+TRAPHANDLER_NOEC(oflow_handler, T_OFLOW)
+TRAPHANDLER_NOEC(bound_handler, T_BOUND)
+TRAPHANDLER_NOEC(device_handler, T_DEVICE)
+TRAPHANDLER_NOEC(illop_handler, T_ILLOP)
+TRAPHANDLER(dblflt_handler, T_DBLFLT)
 
+# TRAPHANDLER_NOEC(coproc_handler, T_COPROC)
 
+TRAPHANDLER(tss_handler, T_TSS)
+TRAPHANDLER(segnp_handler, T_SEGNP)
+TRAPHANDLER(stack_handler, T_STACK)
+TRAPHANDLER(gpflt_handler, T_GPFLT)
+TRAPHANDLER(pgflt_handler, T_PGFLT)
+
+# TRAPHANDLER(res_handler, T_RES)
+
+TRAPHANDLER_NOEC(fperr_handler, T_FPERR)
+TRAPHANDLER(align_handler, T_ALIGN)
+TRAPHANDLER_NOEC(mchk_handler, T_MCHK)
+TRAPHANDLER_NOEC(simderr_handler, T_SIMDERR)
+TRAPHANDLER_NOEC(syscall_handler, T_SYSCALL)
+
+/*
+	TRAPHANDLER_NOEC(th0, 0)
+	TRAPHANDLER_NOEC(th1, 1)
+	TRAPHANDLER_NOEC(th3, 3)
+	TRAPHANDLER_NOEC(th4, 4)
+	TRAPHANDLER_NOEC(th5, 5)
+	TRAPHANDLER_NOEC(th6, 6)
+	TRAPHANDLER_NOEC(th7, 7)
+	TRAPHANDLER(th8, 8)
+	TRAPHANDLER_NOEC(th9, 9)
+	TRAPHANDLER(th10, 10)
+	TRAPHANDLER(th11, 11)
+	TRAPHANDLER(th12, 12)
+	TRAPHANDLER(th13, 13)
+	TRAPHANDLER(th14, 14)
+	TRAPHANDLER_NOEC(th16, 16)
+
+*/
 /*
  * Lab 3: Your code here for _alltraps
  */
 
+
+_alltraps:
+	pushl	%ds
+	pushl	%es
+	pushal
+	pushl	$GD_KD
+	popl	%ds
+	pushl	$GD_KD
+	popl	%es
+	pushl	%esp
+	call	trap
