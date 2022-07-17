@@ -26,6 +26,8 @@ static const char * const error_string[MAXERROR] =
 	[E_NO_MEM]	= "out of memory",
 	[E_NO_FREE_ENV]	= "out of environments",
 	[E_FAULT]	= "segmentation fault",
+	[E_IPC_NOT_RECV]= "env is not recving",
+	[E_EOF]		= "unexpected end of file",
 };
 
 /*
@@ -82,6 +84,12 @@ void printfmt(void (*putch)(int, void*), void *putdat, const char *fmt, ...);
 void
 vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)
 {
+	// register int ch;
+	// while ((ch = *(unsigned char *) fmt++) != '\0') {
+	// 		putch(ch, putdat);
+	// 	}
+	// return; 
+#if 1
 	register const char *p;
 	register int ch, err;
 	unsigned long long num;
@@ -241,6 +249,7 @@ vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)
 			break;
 		}
 	}
+	#endif
 }
 
 void

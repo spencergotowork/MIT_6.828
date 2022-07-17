@@ -1,3 +1,17 @@
 {
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+    "files.associations": {
+        "types.h": "c",
+        "mmu.h": "c",
+        "pmap.h": "c",
+        "trap.h": "c",
+        "syscall.h": "c",
+        "lib.h": "c",
+        "stdio.h": "c",
+        "env.h": "c",
+        "console.h": "c",
+        "error.h": "c",
+        "string.h": "c",
+        "kclock.h": "c"
+    }
 }
