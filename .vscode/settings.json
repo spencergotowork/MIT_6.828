@@ -10,6 +10,8 @@
         "stdio.h": "c",
         "env.h": "c",
         "console.h": "c",
-        "error.h": "c"
+        "error.h": "c",
+        "string.h": "c",
+        "kclock.h": "c"
     }
 }

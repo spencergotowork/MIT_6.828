@@ -26,10 +26,16 @@
 	
 
 #define TRAPHANDLER(name, num)						\
+.data;  \
+        .long name; \
+.text;  \
 	.globl name;		/* define global symbol for 'name' */	\
 	.type name, @function;	/* symbol type is function */		\
 	.align 2;		/* align function definition */		\
 	name:			/* function starts here */		\
+	.if !(num == 8 || num == 17 || (num >= 10 && num <= 14));   \
+	pushl $0;   \
+	.endif;     \
 	pushl $(num);							\
 	jmp _alltraps
 
@@ -37,7 +43,21 @@
  * It pushes a 0 in place of the error code, so the trap frame has the same
  * format in either case.
  */
+ /*
 #define TRAPHANDLER_NOEC(name, num)					\
+	.globl name;							\
+	.type name, @function;						\
+	.align 2;							\
+name:								\
+	pushl $0;							\
+	pushl $(num);							\
+	jmp _alltraps
+	*/
+
+#define TRAPHANDLER_NOEC(name, num)					\
+.data;  \
+	.long name;  \
+.text;\
 	.globl name;							\
 	.type name, @function;						\
 	.align 2;							\
@@ -46,56 +66,68 @@
 	pushl $(num);							\
 	jmp _alltraps
 
-.text
+
+
+.data
+	.globl funs
+
+
 
 /*
  * Lab 3: Your code here for generating entry points for the different traps.
  */
+funs:
 
-TRAPHANDLER_NOEC(divide_handler, T_DIVIDE)
-TRAPHANDLER_NOEC(debug_handler, T_DEBUG)
-TRAPHANDLER_NOEC(nmi_handler, T_NMI)
-TRAPHANDLER_NOEC(brkpt_handler, T_BRKPT)
-TRAPHANDLER_NOEC(oflow_handler, T_OFLOW)
-TRAPHANDLER_NOEC(bound_handler, T_BOUND)
-TRAPHANDLER_NOEC(device_handler, T_DEVICE)
-TRAPHANDLER_NOEC(illop_handler, T_ILLOP)
-TRAPHANDLER(dblflt_handler, T_DBLFLT)
+TRAPHANDLER(funs0, 0)
+    TRAPHANDLER(funs1, 1)
+    TRAPHANDLER(funs2, 2)
+    TRAPHANDLER(funs3, 3)
+    TRAPHANDLER(funs4, 4)
+    TRAPHANDLER(funs5, 5)
+    TRAPHANDLER(funs6, 6)
+    TRAPHANDLER(funs7, 7)
+    TRAPHANDLER(funs8, 8)
+    TRAPHANDLER(funs9, 9)
+    TRAPHANDLER(funs10, 10)
+    TRAPHANDLER(funs11, 11)
+    TRAPHANDLER(funs12, 12)
+    TRAPHANDLER(funs13, 13)
+    TRAPHANDLER(funs14, 14)
+    TRAPHANDLER(funs15, 15)
+    TRAPHANDLER(funs16, 16)
+    TRAPHANDLER(funs17, 17)
+    TRAPHANDLER(funs18, 18)
+    TRAPHANDLER(funs19, 19)
+    TRAPHANDLER(funs20, 20)
+    TRAPHANDLER(funs21, 21)
+    TRAPHANDLER(funs22, 22)
+    TRAPHANDLER(funs23, 23)
+    TRAPHANDLER(funs24, 24)
+    TRAPHANDLER(funs25, 25)
+    TRAPHANDLER(funs26, 26)
+    TRAPHANDLER(funs27, 27)
+    TRAPHANDLER(funs28, 28)
+    TRAPHANDLER(funs29, 29)
+    TRAPHANDLER(funs30, 30)
+    TRAPHANDLER(funs31, 31)
+    TRAPHANDLER(funs32, 32)
+    TRAPHANDLER(funs33, 33)
+    TRAPHANDLER(funs34, 34)
+    TRAPHANDLER(funs35, 35)
+    TRAPHANDLER(funs36, 36)
+    TRAPHANDLER(funs37, 37)
+    TRAPHANDLER(funs38, 38)
+    TRAPHANDLER(funs39, 39)
+    TRAPHANDLER(funs40, 40)
+    TRAPHANDLER(funs41, 41)
+    TRAPHANDLER(funs42, 42)
+    TRAPHANDLER(funs43, 43)
+    TRAPHANDLER(funs44, 44)
+    TRAPHANDLER(funs45, 45)
+    TRAPHANDLER(funs46, 46)
+    TRAPHANDLER(funs47, 47)
+    TRAPHANDLER(funs48, 48)
 
-# TRAPHANDLER_NOEC(coproc_handler, T_COPROC)
-
-TRAPHANDLER(tss_handler, T_TSS)
-TRAPHANDLER(segnp_handler, T_SEGNP)
-TRAPHANDLER(stack_handler, T_STACK)
-TRAPHANDLER(gpflt_handler, T_GPFLT)
-TRAPHANDLER(pgflt_handler, T_PGFLT)
-
-# TRAPHANDLER(res_handler, T_RES)
-
-TRAPHANDLER_NOEC(fperr_handler, T_FPERR)
-TRAPHANDLER(align_handler, T_ALIGN)
-TRAPHANDLER_NOEC(mchk_handler, T_MCHK)
-TRAPHANDLER_NOEC(simderr_handler, T_SIMDERR)
-TRAPHANDLER_NOEC(syscall_handler, T_SYSCALL)
-
-/*
-	TRAPHANDLER_NOEC(th0, 0)
-	TRAPHANDLER_NOEC(th1, 1)
-	TRAPHANDLER_NOEC(th3, 3)
-	TRAPHANDLER_NOEC(th4, 4)
-	TRAPHANDLER_NOEC(th5, 5)
-	TRAPHANDLER_NOEC(th6, 6)
-	TRAPHANDLER_NOEC(th7, 7)
-	TRAPHANDLER(th8, 8)
-	TRAPHANDLER_NOEC(th9, 9)
-	TRAPHANDLER(th10, 10)
-	TRAPHANDLER(th11, 11)
-	TRAPHANDLER(th12, 12)
-	TRAPHANDLER(th13, 13)
-	TRAPHANDLER(th14, 14)
-	TRAPHANDLER_NOEC(th16, 16)
-
-*/
 /*
  * Lab 3: Your code here for _alltraps
  */
@@ -111,3 +143,4 @@ _alltraps:
 	popl	%es
 	pushl	%esp
 	call	trap
+	
