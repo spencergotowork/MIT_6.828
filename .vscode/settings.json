@@ -12,6 +12,8 @@
         "console.h": "c",
         "error.h": "c",
         "string.h": "c",
-        "kclock.h": "c"
+        "kclock.h": "c",
+        "x86.h": "c",
+        "fs.h": "c"
     }
 }

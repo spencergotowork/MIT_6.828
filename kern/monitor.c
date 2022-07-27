@@ -25,7 +25,7 @@ struct Command {
 static struct Command commands[] = {
 	{ "help", "Display this list of commands", mon_help },
 	{ "kerninfo", "Display information about the kernel", mon_kerninfo },
-	{ "backtrace", "implementation of mon_backtrace", mon_backtrace},
+	{ "backtrace", "Stack backtrace", mon_backtrace}
 };
 
 /***** Implementations of basic kernel monitor commands *****/
@@ -59,28 +59,19 @@ mon_kerninfo(int argc, char **argv, struct Trapframe *tf)
 int
 mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 {
-// 	// Your code here.
-// 	uint32_t ebp = read_ebp();                // 拿到ebp的值，类型和函数read_ebp的返回类型一致
-// 	ebp = (unsigned int *)ebp;           // 转化为指针
-
-	unsigned int *ebp = (unsigned int*)read_ebp();
-	cprintf("Stack backtrace:\n");
-	while(ebp) {
-		cprintf("ebp %08x ", ebp);
-		cprintf("eip %08x args", ebp[1]);
-		for(int i = 2;i <=6; i++)
-			cprintf(" %08x", ebp[i]);
-		cprintf("\n");
-		// cprintf("%08x", ebp[i]);
-		struct Eipdebuginfo info;
-		unsigned int eip = ebp[1];
-		int flag = debuginfo_eip(eip, &info);
-		cprintf("\t%s:%d: %.*s+%d\n",
-		info.eip_file, info.eip_line,
-		info.eip_fn_namelen, info.eip_fn_name,
-		info.eip_fn_addr);
-		ebp = (unsigned int*)(*ebp);		
-
+	// Your code here.
+	uint32_t *ebp = (uint32_t *)read_ebp();
+	struct Eipdebuginfo eipdebuginfo;
+	while (ebp != 0) {
+		//打印ebp, eip, 最近的五个参数
+		uint32_t eip = *(ebp + 1);
+		cprintf("ebp %08x eip %08x args %08x %08x %08x %08x %08x\n", ebp, eip, *(ebp + 2), *(ebp + 3), *(ebp + 4), *(ebp + 5), *(ebp + 6));
+		//打印文件名等信息
+		debuginfo_eip((uintptr_t)eip, &eipdebuginfo);
+		cprintf("%s:%d", eipdebuginfo.eip_file, eipdebuginfo.eip_line);
+		cprintf(": %.*s+%d\n", eipdebuginfo.eip_fn_namelen, eipdebuginfo.eip_fn_name, eipdebuginfo.eip_fn_addr);
+		//更新ebp
+		ebp = (uint32_t *)(*ebp);
 	}
 	return 0;
 }

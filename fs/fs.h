@@ -11,8 +11,9 @@
 /* Maximum disk size we can handle (3GB) */
 #define DISKSIZE	0xC0000000
 
-struct Super *super;		// superblock
-uint32_t *bitmap;		// bitmap blocks mapped in memory
+// find in here https://github.com/fisop/jos/issues/4
+extern struct Super *super;	// superblock
+extern uint32_t *bitmap;   	// bitmap blocks mapped in memory
 
 /* ide.c */
 bool	ide_probe_disk1(void);
