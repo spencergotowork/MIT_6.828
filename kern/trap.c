@@ -284,6 +284,8 @@ trap_dispatch(struct Trapframe *tf)
 		return;//break;
 	case (IRQ_OFFSET + IRQ_TIMER):
 		lapic_eoi();
+		if(cpunum() == 0)
+			time_tick();
 		sched_yield();
 		break;
 	case T_SYSCALL:

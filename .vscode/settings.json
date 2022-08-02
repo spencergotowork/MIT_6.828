@@ -14,6 +14,12 @@
         "string.h": "c",
         "kclock.h": "c",
         "x86.h": "c",
-        "fs.h": "c"
+        "fs.h": "c",
+        "pci.h": "c",
+        "pcireg.h": "c",
+        "e1000.h": "c",
+        "assert.h": "c",
+        "compare": "c",
+        "type_traits": "c"
     }
 }
