@@ -129,12 +129,12 @@ netif_add(struct netif *netif, struct ip_addr *ipaddr, struct ip_addr *netmask,
 #endif /* ENABLE_LOOPBACK && LWIP_LOOPBACK_MAX_PBUFS */
 
   netif_set_addr(netif, ipaddr, netmask, gw);
-
+cprintf("come 132\n");
   /* call user specified initialization function for netif */
   if (init(netif) != ERR_OK) {
     return NULL;
   }
-
+cprintf("come 137\n");
   /* add this netif to the list */
   netif->next = netif_list;
   netif_list = netif;

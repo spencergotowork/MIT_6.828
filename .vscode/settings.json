@@ -20,6 +20,7 @@
         "e1000.h": "c",
         "assert.h": "c",
         "compare": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "sockets.h": "c"
     }
 }

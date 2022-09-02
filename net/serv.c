@@ -84,13 +84,13 @@ lwip_init(struct netif *nif, void *if_state,
 	ipaddr.addr  = init_addr;
 	netmask.addr = init_mask;
 	gateway.addr = init_gw;
-
+	cprintf("come 87\n");
 	if (0 == netif_add(nif, &ipaddr, &netmask, &gateway,
 			   if_state,
 			   jif_init,
 			   ip_input))
 		panic("lwip_init: error in netif_add\n");
-
+	cprintf("come 93\n");
 	netif_set_default(nif);
 	netif_set_up(nif);
 }
@@ -135,19 +135,19 @@ serve_init(uint32_t ipaddr, uint32_t netmask, uint32_t gw)
 {
 	int r;
 	lwip_core_lock();
-
+	// cprintf("come serve_init");
 	uint32_t done = 0;
 	tcpip_init(&tcpip_init_done, &done);
 	lwip_core_unlock();
 	thread_wait(&done, 0, (uint32_t)~0);
 	lwip_core_lock();
-
+	cprintf("come 144\n");
 	lwip_init(&nif, &output_envid, ipaddr, netmask, gw);
-
+	cprintf("146\n");
 	start_timer(&t_arp, &etharp_tmr, "arp timer", ARP_TMR_INTERVAL);
 	start_timer(&t_tcpf, &tcp_fasttmr, "tcp f timer", TCP_FAST_INTERVAL);
 	start_timer(&t_tcps, &tcp_slowtmr, "tcp s timer", TCP_SLOW_INTERVAL);
-
+	// cprintf("come 150 \n");
 	struct in_addr ia = {ipaddr};
 	cprintf("ns: %02x:%02x:%02x:%02x:%02x:%02x"
 		" bound to static IP %s\n",

@@ -12,6 +12,7 @@
 #include <kern/console.h>
 #include <kern/sched.h>
 #include <kern/time.h>
+#include <kern/e1000.h>
 
 // Print a string to the system console.
 // The string is exactly 'len' characters long.
@@ -415,6 +416,13 @@ sys_time_msec(void)
 	// panic("sys_time_msec not implemented");
 }
 
+// send web pkg
+int
+sys_pkg_send(void *data, size_t len)
+{
+	return e1000_transmit(data, len);
+}
+
 // Dispatches to the correct kernel function, passing the arguments.
 int32_t
 syscall(uint32_t syscallno, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, uint32_t a5)
@@ -469,9 +477,12 @@ syscall(uint32_t syscallno, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, 
 			return sys_env_set_trapframe(a1, (void*)a2);
 		case SYS_time_msec:
 			return sys_time_msec();
+		case SYS_pkg_send:
+			return sys_pkg_send((void*)a1, (size_t)a2);
+		case SYS_pkg_recv:
+			// return sys_pkg_recv((void*)a1, len);
 		default:
 			return -E_INVAL;
 	}
 	return ret;
 }
-

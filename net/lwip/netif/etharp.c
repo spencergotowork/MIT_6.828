@@ -859,7 +859,7 @@ etharp_output(struct netif *netif, struct pbuf *q, struct ip_addr *ipaddr)
  * @param ipaddr The IP address to be resolved.
  * @param q If non-NULL, a pbuf that must be delivered to the IP address.
  * q is not freed by this function.
- *
+ *ERR_BUF
  * @note q must only be ONE packet, not a packet queue!
  *
  * @return
