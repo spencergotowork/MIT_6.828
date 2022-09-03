@@ -143,7 +143,7 @@ serve_init(uint32_t ipaddr, uint32_t netmask, uint32_t gw)
 	lwip_core_lock();
 	cprintf("come 144\n");
 	lwip_init(&nif, &output_envid, ipaddr, netmask, gw);
-	cprintf("146\n");
+	cprintf("come 146\n");
 	start_timer(&t_arp, &etharp_tmr, "arp timer", ARP_TMR_INTERVAL);
 	start_timer(&t_tcpf, &tcp_fasttmr, "tcp f timer", TCP_FAST_INTERVAL);
 	start_timer(&t_tcps, &tcp_slowtmr, "tcp s timer", TCP_SLOW_INTERVAL);

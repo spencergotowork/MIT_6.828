@@ -278,15 +278,18 @@ trap_dispatch(struct Trapframe *tf)
 	{
 	case T_PGFLT: 
 		page_fault_handler(tf); 
-		return;//break;
+		// return;
+		break;
 	case T_BRKPT:
 		monitor(tf);
-		return;//break;
+		// return;
+		break;
 	case (IRQ_OFFSET + IRQ_TIMER):
 		lapic_eoi();
 		if(cpunum() == 0)
 			time_tick();
 		sched_yield();
+		// return;
 		break;
 	case T_SYSCALL:
 		tf->tf_regs.reg_eax=syscall(tf->tf_regs.reg_eax,

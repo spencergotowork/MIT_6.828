@@ -4,6 +4,7 @@
 
 // LAB 6: Your driver code here
 #define E1000REG(offset) (void*)(bar_va + offset)
+// #define E1000REG(offset)  (*(volatile unsigned int *)(bar_va + offset))
 volatile void *bar_va;
 
 // define tdh tdt tdlen
@@ -11,18 +12,23 @@ struct e1000_tdh *tdh;
 struct e1000_tdt *tdt;
 struct e1000_tdlen *tdlen;
 
-struct e1000_tx_desc tx_desc_list[TXDESCS];
+struct e1000_tx_desc tx_desc_list[TXDESCS] __attribute__((aligned(16)));
 char tx_buffer_array[TXDESCS][TX_PKT_SIZE];
 
 int e1000_attachfunc(struct pci_func *pcif) {
     pci_func_enable(pcif);
     bar_va = mmio_map_region(pcif->reg_base[0], pcif->reg_size[0]);
 
+// example for status
     uint32_t *status_reg = E1000REG(E1000_STATUS);
     cprintf("e1000: status 0x%08x\n", E1000REG(E1000_STATUS));
 
     assert(*status_reg == 0x80080783);
     e1000_transmit_init();
+
+// example send pkt
+	char *str = "hello";
+	e1000_transmit(str, 6);
     return 0;
 }
 

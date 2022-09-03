@@ -59,8 +59,8 @@ ipc_send(envid_t to_env, uint32_t val, void *pg, int perm)
 	int ret;
 	while((ret = sys_ipc_try_send(to_env, val, pg, perm))) {
 		if(ret == 0) break;
-		if(ret != -E_IPC_NOT_RECV)
-			panic("any other errors than -E_IPC_NOT_RECV the error number is %d",ret);
+		// if(ret != -E_IPC_NOT_RECV)
+		// 	panic("any other errors than -E_IPC_NOT_RECV the error number is %d",ret);
 		sys_yield();
 	}
 

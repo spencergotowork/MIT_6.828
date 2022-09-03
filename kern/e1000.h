@@ -15,7 +15,7 @@
 #define E1000_TCTL 0x00400
 #define E1000_TIPG 0x00410
 #define TXDESCS 32
-#define TX_PKT_SIZE 1518
+#define TX_PKT_SIZE 1536 //1518
 #define E1000_TXD_STAT_DD    0x00000001 /* Descriptor Done */
 #define E1000_TXD_CMD_EOP    0x00000001 /* End of Packet */
 #define E1000_TXD_CMD_RS     0x00000008 /* Report Status */
