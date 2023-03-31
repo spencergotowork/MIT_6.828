@@ -79,3 +79,19 @@ ipc_find_env(enum EnvType type)
 			return envs[i].env_id;
 	return 0;
 }
+
+// PCI function 00:03.0 (8086:100e) enabled
+// reg_base:febc0000, reg_size:20000
+// e1000: tx disabled
+// FS is running
+// FS can do I/O
+// Device 1 presence: 1
+// i am parent environment 00001002
+// block cache is good
+// superblock is good
+// bitmap is good
+// ns: 52:54:00:12:34:56 bound to static IP 10.0.2.15
+// NS: TCP/IP initialized.
+// e1000: index 0: 0x2e1300 : 900002a 0
+// hello, world
+// i am environment 00001006

@@ -130,7 +130,7 @@ sys_pkg_send(void *data, size_t len)
 }
 
 int
-sys_pkt_recv(void *addr, size_t *len)
+sys_pkg_recv(void *addr, size_t *len)
 {
 	return syscall(SYS_pkg_recv, 1, (uint32_t)addr, (uint32_t)len, 0, 0, 0);
 }
